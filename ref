@@ -1,0 +1,63 @@
+https://www.geeksforgeeks.org/how-to-use-terminal-in-sublime-text-editor/
+
+
+
+How to Use Terminal in Sublime Text Editor ?
+
+Well in Visual Studio Code we get a direct Option for opening Terminal, Unlike Sublime Text editor. Sublime is Simple and free to use, Light on memory, and can easily work with multiple projects. In this article, we will see how to use the terminal in a sublime text editor.
+Stepwise implementation:
+
+Step 1: Open Sublime Text,
+
+Step 2: Open Command Palette using command Ctrl+shift+p
+
+Type the below until the option appears and select it.
+poster
+×
+
+Package Control: Install Package
+
+Note: You’ll need to install package control if you are using it for the first time.
+
+Type ‘Terminus’ and select it. Wait for it to Complete installation and Restart sublime text.
+
+Step 3: Now go to Preferences >Package Settings > Terminus > Command Palette
+
+Now paste this code in the Default sublime Commands Section
+
+[
+   {
+        "caption": "Terminal (panel)",
+        "command": "terminus_open",
+        "args"   : {
+           "cmd": "bash",
+           "cwd": "${file_path:${folder}}",
+           "title": "Command Prompt",
+           "panel_name": "Terminus"
+        }
+   },
+]  
+
+And save it.
+
+Note: The above code is for Linux users for Windows users you have to enter “cmd.exe” in place of “bash”
+
+Step 4: Now go to Preferences >Package Settings > Terminus > Key Bindings
+
+Now paste this code in the Default sublime Keymap Section and save it:
+
+[
+   {
+       "keys": ["alt+1"],
+       "command": "terminus_open",
+       "args" : {
+           "cmd": "bash",
+           "cwd": "${file_path:${folder}}",
+           "panel_name": "Terminus"
+       }
+   }
+] 
+
+Note: The above code is for Linux users for Windows users you have to enter “cmd.exe” in place of “bash”, also here we kept the shortcut key as “alt+1” you can use your own key.
+
+Step 5: So whenever you want to use terminal press alt+1 and to close terminal type exit in the terminal and hit enter.
