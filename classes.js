@@ -16,6 +16,10 @@ class Admin extends User {
 		super(firstName, surName)
 		this.role = role
 	}
+
+	getRole() {
+		return this.role
+	}
 }
 
 
@@ -25,4 +29,4 @@ const admin = new Admin("Admin name", "Admin surname", "SUPER_ADMIN")
 console.log(user)
 
 console.log(admin)
-console.log(admin.getFullName())
+console.log(admin.getFullName(), admin.getRole())
