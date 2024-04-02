@@ -1,3 +1,187 @@
+
+VITE
+Next Generation Frontend Tooling
+
+Get ready for a development environment that can finally catch up with you.
+$~ npm create vite@latest .
+$~ npm install
+$~ npm run dev  
+
+
+CLOSURE
+https://www.w3schools.com/js/js_function_closures.asp
+
+JavaScript variables can belong to the local or global scope.Global variables can be made local (private) with closures.
+
+In a web page, global variables belong to the page thus, can be used (and changed) by all other scripts in the page.
+
+A local variable can only be used inside the function where it is defined. It is hidden from other functions and other scripting code.
+
+Global and local variables with the same name are different variables. Modifying one, does not modify the other.
+
+Variables created without a declaration keyword (var, let, or const) are always global, even if they are created inside a function.
+
+Example
+function myFunction() {
+  a = 4;
+}
+
+Variable Lifetime
+Global variables live until the page is discarded, like when you navigate to another page or close the window.
+
+Local variables have short lives. They are created when the function is invoked, and deleted when the function is finished.
+
+A Counter Dilemma
+Suppose you want to use a variable for counting something, and you want this counter to be available to all functions.
+
+You could use a global variable, and a function to increase the counter:
+Example
+// Initiate counter
+let counter = 0;
+
+// Function to increment counter
+function add() {
+  counter += 1;
+}
+
+// Call add() 3 times
+add();
+add();
+add();
+
+// The counter should now be 3
+
+There is a problem with the solution above: Any code on the page can change the counter, without calling add().
+The counter should be local to the add() function, to prevent other code from changing it:
+
+Example
+// Initiate counter
+let counter = 0;
+
+// Function to increment counter
+function add() {
+  let counter = 0;
+  counter += 1;
+}
+
+// Call add() 3 times
+add();
+add();
+add();
+
+//The counter should now be 3. But it is 0
+
+It did not work because we display the global counter instead of the local counter.
+
+We can remove the global counter and access the local counter by letting the function return it:
+
+Example
+// Function to increment counter
+function add() {
+  let counter = 0;
+  counter += 1;
+  return counter;
+}
+
+// Call add() 3 times
+add();
+add();
+add();
+
+//The counter should now be 3. But it is 1.
+It did not work because we reset the local counter every time we call the function.
+
+ JavaScript inner function can solve this.(JavaScript Nested Functions):
+
+ Example
+ function add() {
+  let counter = 0;
+  function plus() {counter += 1;}
+  plus();   
+  return counter;
+}
+
+This could have solved the counter dilemma, if we could reach the plus() function from the outside. We also need to find a way to execute counter = 0 only once.
+
+We need a closure.
+Example
+const add = (function () {
+  let counter = 0;
+  return function () {counter += 1; return counter}
+})();
+
+add();
+add();
+add();
+
+// the counter is now 3
+
+Example Explained
+The variable add is assigned to the return value of a self-invoking function.
+The self-invoking function only runs once. It sets the counter to zero (0), and returns a function expression.
+This way add becomes a function. The "wonderful" part is that it can access the counter in the parent scope.
+
+This is called a JavaScript closure. It makes it possible for a function to have "private" variables.
+
+A closure in JavaScript is a powerful concept that combines a function with references to its surrounding state, creating a self-contained bundle of functionality. Let’s dive into the details:
+
+Definition:
+A closure is formed when a function is bundled together with references to its lexical environment, which includes variables and functions declared in its outer scope.
+
+In simpler terms, a closure allows an inner function to access variables from its parent function even after the parent function has finished executing.(a function having access to the parent scope, even after the parent function has closed.)
+
+
+PARENT NODE VS PARENT ELEMENT
+https://www.geeksforgeeks.org/difference-between-dom-parentnode-and-parentelement-in-javascript/
+
+Difference: Parent Element returns null if the parent is not an element node, that is the main difference between parentElement and parentNode. In many cases one can use anyone of them, in most cases, they are the same. For instance:
+
+// returns the document node
+document.documentElement.parentNode; 
+
+// returns null
+document.documentElement.parentElement; 
+
+The HTML element (document.documentElement) doesn’t have a parent that is an element, it is a node, therefore, the parent element is null.
+
+
+
+NULL VS UNDEFINED
+https://stackoverflow.com/questions/5076944/what-is-the-difference-between-null-and-undefined-in-javascript
+
+undefined means a variable has been declared but has not yet been assigned a value :
+
+var testVar;
+console.log(testVar); //shows undefined
+console.log(typeof testVar); //shows undefined
+
+null is an assignment value. It can be assigned to a variable as a representation of no value :
+
+var testVar = null;
+console.log(testVar); //shows null
+console.log(typeof testVar); //shows object
+Expand snippet
+From the preceding examples, it is clear that undefined and null are two distinct types: undefined is a type itself (undefined) while null is an object.
+
+Proof :
+
+console.log(null === undefined) // false (not the same type)
+console.log(null == undefined) // true (but the "same value")
+console.log(null === null) // true (both type and value are the same)
+Expand snippet
+and
+
+null = 'value' // Uncaught SyntaxError: invalid assignment left-hand side
+undefined = 'value' // 'value'
+
+Quote from the book Professional JS For Web Developers (Wrox): "You may wonder why the typeof operator returns 'object' for a value that is null. This was actually an error in the original JavaScript implementation that was then copied in ECMAScript. Today, it is rationalized that null is considered a placeholder for an object, even though, technically, it is a primitive value." – 
+
+The comment from Nir O. is very important. If I want to have a variable that has no value in the beginning, I write "... = null", eg "myvar = null". This way - when I mistype "if (myxar == null) {...}" - the if block is not executed. I don't have this advantage with undefined: myvar = undefined; myvar = 4; if (typeof myxar == "undefined") { ...}
+
+so basically null value means a variable has been explicitly set as (no value = null) or has been initialized and defined to be nothing. While undefined means it was probably never initialized or if it was it was never defined.
+
+
+INTEGRATED TERMINAL IN SUBLIME
 https://www.geeksforgeeks.org/how-to-use-terminal-in-sublime-text-editor/
 
 
