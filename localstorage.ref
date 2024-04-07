@@ -1,0 +1,153 @@
+https://www.freecodecamp.org/news/web-storage-api-how-to-store-data-on-the-browser/
+
+Web Storage API – How to Store Data on the Browser
+Nathan Sebhastian
+Nathan Sebhastian
+Web Storage API – How to Store Data on the Browser
+The Web Storage API is a set of APIs exposed by the browser so that you can store data in the browser.
+
+The data stored in the Web Storage use the key/value pair format, and both data will be stored as strings.
+
+There are two types of storage introduced in the Web Storage API: Local Storage and Session Storage.
+
+In this article, I’m going to show you how to use the Web Storage API and why it’s useful for web developers.
+
+How the Web Storage API Works
+The Web Storage API exposes a set of objects and methods that you can use to store data in the browser. The data you store in Web Storage is private, which means no other website can access it.
+
+In Google Chrome, you can view Web Storage by opening the developer tools window and going to the Application tab as shown below:
+
+web-storage-location-1
+The web storage location in Google Chrome
+In the picture above, you can see that the Storage menu also has other storage types like Indexed DB, Web SQL, and cookies. The Web SQL standard has been deprecated, and IndexedDB is rarely used because it’s too complex. Any data you store in IndexedDB might better be stored on the server.
+
+As for cookies, it’s a more traditional mechanism of storing data that only allows you to store a maximum of 4 KB of data. By contrast, the Local Storage capacity is 10 MB and the session storage has 5 MB capacity.
+
+This is why we’re going to focus only on Local Storage and Session Storage in this article.
+
+Local Storage and Session Storage Explained
+Local Storage and Session Storage are the two standard mechanisms supported by the Web Storage API.
+
+Web storage is domain specific, meaning data stored under one domain (netflix.com) can’t be accessed by another domain (www.netflix.com or members.netflix.com)
+
+Web storage is also protocol specific. This means the data you store in a http:// site won’t be available under the https:// site.
+
+The main difference between Local and Session Storage is that Local Storage will store your data forever. If you want to remove the data, you need to use the available method or clear it manually from the Applications tab.
+
+By contrast, the data stored in session storage is only available during the page session. When you close the browser or the tab, the session storage for that specific tab is removed.
+
+Both Local and Session Storage can be accessed through the window object under the variables localStorage and sesionStorage, respectively. Let’s see the methods and properties of these storage types next.
+
+Methods and Properties of Local and Session Storage
+Both Local and Session Storage have the same methods and properties. To set a new key/value pair in the Local Storage, you can use the setItem() method of the localStorage object:
+
+localStorage.setItem('firstName', 'Nathan');
+Calling the setItem() method
+If you look into the Local Storage menu in the browser, you should see the data above saved into the storage as follows:
+
+localstorage-setitem
+Storing a key/value pair in Local Storage
+The key you used in localStorage must be unique. If you set another data with a key that already exists, then the setItem() method will replace the previous value with the new one.
+
+To get the value out of local storage, you need to call the getItem() method and pass the key you used when saving the data. If the key doesn’t exist, then getItem() will return null back:
+
+const firstName = localStorage.getItem('firstName');
+console.log(firstName); // Nathan
+
+const lastName = localStorage.getItem('lastName');
+console.log(lastName); // null
+Calling the getItem() method
+To remove the data you have in local storage, call the removeItem() method and pass the key pointing to the data you want to remove:
+
+localStorage.removeItem('firstName');
+Calling the removeItem() method
+The removeItem() method will always return undefined. When the data you want to remove doesn’t exist, the method simply does nothing.
+
+If you want to clear the storage, you can use the clear() method:
+
+localStorage.clear();
+Clearing the Local Storage
+The clear() method removes all key/value pairs from the storage object you are accessing.
+
+Properties of Local and Session Storage
+Both storage types have only one property, which is the length property that shows the amount of data stored in them.
+
+sessionStorage.setItem('firstName', 'Nathan');
+sessionStorage.setItem('lastName', 'Sebhastian');
+
+console.log(sessionStorage.length); // 2
+
+sessionStorage.clear();
+console.log(sessionStorage.length); // 0
+Accessing the length property of Session Storage
+And that’s all the methods and properties you can access in localStorage and sessionStorage.
+
+How to Store JSON Strings in Web Storage Storage
+Since Web Storage always stores data as strings, you can store complex data as a JSON string, and then convert that string back into an object when you access it.
+
+For example, suppose I want to store the following information about a user:
+
+const user = {
+  firstName: 'Nathan',
+  lastName: 'Sebhastian',
+  url: 'https://codewithnathan.com',
+};
+Example of an object data
+At first, I might store the data as a series of key/value pairs like this:
+
+localStorage.setItem('firstName', user.firstName);
+localStorage.setItem('lastName', user.lastName);
+localStorage.setItem('url', user.url);
+Putting an object into Local Storage
+But a better way is to convert the JavaScript object into a JSON string, and then store the data under one key as follows:
+
+const user = {
+  firstName: 'Nathan',
+  lastName: 'Sebhastian',
+  url: 'https://codewithnathan.com',
+};
+
+const userData = JSON.stringify(user);
+
+localStorage.setItem('user', userData);
+Convert an object into JSON string using JSON.stringify()
+Now the local storage will have only one key/value pair with the JSON string as its value. You can open the Applications tab to see this:
+
+store-as-json
+Storing a JSON string in Local Storage
+When you need the data, call the getItem() and JSON.parse() methods as follows:
+
+const getUser = JSON.parse(localStorage.getItem('user'));
+
+console.log(getUser);
+// {firstName: 'Nathan', lastName: 'Sebhastian', url: 'https://codewithnathan.com'}
+Retrieving and parsing a JSON string as an object
+Here, you can see that the data is returned as a regular JavaScript object.
+
+Local Storage vs Session Storage – Which One to Use?
+Based on my experience, localStorage is the preferred Web Storage mechanism because the data will persist as long as you need it to. When you don’t need the data, you can remove it using the removeItem() method.
+
+sessionStorage is only used when you need to store temporary data, like tracking whether a popup box has been shown to the user or not.
+
+But this is also open to discussion because you might not want to show a popup every time the user logs into your web application, but only once. In that case, you should use localStorage instead.
+
+My rule of thumb is to use localStorage first, and sessionStorage when the situation needs it.
+
+Benefits of Using the Web Storage API
+Now that you know how the Web Storage API works, you can see that there are some benefits of using it:
+
+Storing data on the browser reduces the need to make a server request for a piece of information. This can improve the performance of your web applications.
+The simple key/value pair format allows you to store user preferences and local settings that should persist between sessions.
+The Web Storage API is simple to use, providing only a few methods and one property. It’s simple to set and retrieve data using JavaScript
+It has offline support. By storing necessary data locally, the Web Storage enables your web application to work offline.
+The Web Storage is also a standardized API, meaning the code you write will work in many different browsers.
+But of course, not all data should be stored in the Web Storage API. You still need a server database to keep records that are important for your application.
+
+Conclusion
+Web Storage is a useful API that allows you to quickly store and retrieve data from the browser. Using Web Storage, you can store the user’s preferences when accessing your application.
+
+localStorage allows you to store data forever until it’s removed manually, while sessionStorage will persist as long as the browser or tab is open.
+
+Some benefits of using the Web Storage API include reducing server requests, offline support, and a simple API that’s easy to use. It’s also standardized, so it will work on different browsers.
+
+If you enjoyed this article and want to take your JavaScript skills to the next level, I recommend you check out my new book Beginning Modern JavaScript here.

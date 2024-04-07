@@ -1,0 +1,49 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "a title",
+      "views": 100
+    },
+    {
+      "id": "2",
+      "title": "another title",
+      "views": 200
+    },
+    {
+      "id": "147a",
+      "title": "Hello JS",
+      "views": 500
+    },
+    {
+      "id": "3391",
+      "title": "Hello Vite",
+      "views": 700
+    },
+    {
+      "id": "65a3",
+      "title": "Hello W0rld",
+      "views": 900
+    },
+    {
+      "id": "0b70",
+      "title": "added post functionality",
+      "views": 1900
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "text": "a comment about post 1",
+      "postId": "1"
+    },
+    {
+      "id": "2",
+      "text": "another comment about post 1",
+      "postId": "1"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
