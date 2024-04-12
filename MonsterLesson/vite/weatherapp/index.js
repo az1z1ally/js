@@ -1,4 +1,6 @@
-export class Weather {
+// import weatherData from "weather-data"
+
+class Weather {
   constructor() {
     this.locationSearch = document.querySelector(".location-search");
     this.locationSearchInput = document.querySelector(".location-search-input");
@@ -49,7 +51,7 @@ export class Weather {
     );
     this.weatherInfoImage.setAttribute(
       "src",
-      `/public/${this.weatherInfo.weather[0].icon}.png`
+      `/${this.weatherInfo.weather[0].icon}.png`
     );
     this.weatherInfoName.textContent = this.weatherInfo.name;
     this.humidity.textContent = this.weatherInfo.main.humidity;
