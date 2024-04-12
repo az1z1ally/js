@@ -1,5 +1,5 @@
-# Environment
-.env
+# Environment Variables
+*.env
 
 # Logs
 logs

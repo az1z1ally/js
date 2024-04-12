@@ -5,7 +5,52 @@ Next Generation Frontend Tooling
 Get ready for a development environment that can finally catch up with you.
 $~ npm create vite@latest .
 $~ npm install
-$~ npm run dev  
+$~ npm run dev 
+
+ENIVIRONMENT VARIABLES
+To retrieve environment variables in Node.JS(JS) you can use process.env object as follows: process.env.VARIABLE_NAME, but don't forget that assigning a property on process.env will implicitly convert the value to a string.
+
+Avoid Boolean Logic
+Even if your .env file defines a variable like SHOULD_SEND=false or SHOULD_SEND=0, the values will be converted to strings (“false” and “0” respectively) and not interpreted as booleans.
+eg. 
+if (process.env.SHOULD_SEND) {
+ mailer.send();
+} else {
+  console.log("this won't be reached with values like false and 0");
+}
+
+Instead, you should make explicit checks. I’ve found depending on the environment name goes a long way.
+
+ db.connect({
+  debug: process.env.NODE_ENV === 'development'
+ });
+
+ ==You can use the dotenv package to manage your environment variables per project:
+ The dovenv package is all about loading setting from a file into the environment
+
+npm install dotenv
+- Create a .env file under the project directory and put all of your variables there as VAR_NAME=value pairs.
+- Add require('dotenv').config(); to the top of your application entry file.
+
+
+VITE & ENV
+If you're using Vite in your project, you can use the built-in support for environment variables provided by Vite. Vite allows you to create environment variables that are accessible in your client-side code during development and build time.
+
+Here's how you can use environment variables in a Vite project:
+
+Create a .env file at the root of your project. For example:
+
+VITE_API_KEY=your_api_key_here
+Access the environment variable in your code:
+javascript
+
+const apiKey = import.meta.env.VITE_API_KEY;
+console.log(apiKey);
+
+Note:
+ It is necessary to prepend the name of the environment variable with VITE(this ensures that Vite recognizes it as a client-side environment variable.). This is a convention used by Vite to differentiate between environment variables meant for the client-side code and those meant for the server-side or build-time environment.
+
+Keep in mind that since these environment variables are bundled into your client-side code, they will be visible to anyone who inspects your JavaScript code. Therefore, avoid putting sensitive information directly into your client-side code. If you need to use sensitive information like API keys, consider using a proxy server or other techniques to keep them secure.
 
 
 CLOSURE
